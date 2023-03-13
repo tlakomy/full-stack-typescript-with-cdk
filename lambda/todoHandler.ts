@@ -1,12 +1,12 @@
-import * as AWS from "aws-sdk";
+import { DynamoDB } from "aws-sdk";
 import { v4 as uuid } from "uuid";
 import { APIGatewayEvent } from "aws-lambda";
 
 const tableName = process.env.TABLE_NAME || "";
-const dynamo = new AWS.DynamoDB.DocumentClient();
+const dynamo = new DynamoDB.DocumentClient();
 
 const createResponse = (
-  body: string | AWS.DynamoDB.DocumentClient.ItemList,
+  body: string | DynamoDB.DocumentClient.ItemList,
   statusCode = 200,
 ) => {
   return {
