@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 import ErrorMessage from "./ErrorMessage";
 import TodoList, { TodoObject } from "./TodoList";
 
-const apiEndpoint = process.env.REACT_APP_TODO_ENDPOINT;
+const apiEndpoint = `${process.env.REACT_APP_TODO_ENDPOINT}todos`;
 
 const Wrapper = styled.main`
   display: flex;
@@ -76,7 +76,7 @@ const App = () => {
   const inputElement = React.useRef<HTMLInputElement>(null);
   const [todos, setTodos] = React.useState<Array<TodoObject>>([]);
   const [isLoading, setLoading] = React.useState(true);
-  const [isError, setError] = React.useState(!apiEndpoint);
+  const [isError, setError] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
