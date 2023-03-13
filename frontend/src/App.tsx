@@ -144,7 +144,7 @@ const App = () => {
   return (
     <Wrapper>
       <Header>
-        <h1>Amazon CDK Todo App</h1>
+        <h1>AWS CDK Todo App</h1>
       </Header>
       <NewTodoSection>
         <label htmlFor="add-todo">Add a new todo</label>

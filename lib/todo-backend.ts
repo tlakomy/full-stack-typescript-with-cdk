@@ -1,5 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import * as lambdaNodejs from "aws-cdk-lib/aws-lambda-nodejs";
+import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import { Construct } from "constructs";
 
@@ -16,6 +17,8 @@ export class TodoBackend extends Construct {
     this.handler = new lambdaNodejs.NodejsFunction(this, "TodoHandler", {
       entry: "lambda/todoHandler.ts",
       handler: "handler",
+      runtime: lambda.Runtime.NODEJS_18_X,
+      architecture: lambda.Architecture.ARM_64,
       environment: {
         TABLE_NAME: todosTable.tableName,
       },

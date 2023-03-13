@@ -63,7 +63,7 @@ const deleteTodoItem = async (data: { id: string }) => {
   return id;
 };
 
-exports.handler = async function (event: APIGatewayEvent) {
+export const handler = async function (event: APIGatewayEvent) {
   try {
     const { httpMethod, body: requestBody } = event;
 
