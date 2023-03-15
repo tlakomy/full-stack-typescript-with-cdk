@@ -67,7 +67,6 @@ Notes:
 - `npm i --save-dev @types/aws-lambda`
 - `npm i --save-dev esbuild`
 - deploy
-- go to console and create a Test event
 
 ## Lesson 06
 
@@ -77,6 +76,9 @@ Description:
 In the previous lesson we've managed to successfully create and deploy an AWS Lambda function.
 
 Before we progress further, in this lesson we're going to quickly take a look at AWS Console in order to understand where exactly can we find the stack that we've deployed and also execute the Lambda function using a test event to make sure that it's working fine.
+
+- go to console and create a Test event
+- execute the function
 
 ## Lesson 07
 
