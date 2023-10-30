@@ -1,10 +1,13 @@
-import { DynamoDB } from "aws-sdk";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { ScanCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+
+const client = new DynamoDBClient({});
+const docClient = DynamoDBDocumentClient.from(client);
 
 const tableName = process.env.TABLE_NAME || "";
-const dynamo = new DynamoDB.DocumentClient();
 
 const createResponse = (
-  body: string | DynamoDB.DocumentClient.ItemList,
+  body: Record<string, unknown>[] | string,
   statusCode = 200,
 ) => {
   return {
@@ -18,11 +21,11 @@ const createResponse = (
 };
 
 const getAllTodos = async () => {
-  const scanResult = await dynamo
-    .scan({
-      TableName: tableName,
-    })
-    .promise();
+  const command = new ScanCommand({
+    TableName: tableName,
+  });
+
+  const scanResult = await docClient.send(command);
 
   return scanResult;
 };

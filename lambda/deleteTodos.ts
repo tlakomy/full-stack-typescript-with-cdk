@@ -1,13 +1,13 @@
-import { DynamoDB } from "aws-sdk";
 import { APIGatewayEvent } from "aws-lambda";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DeleteCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+
+const client = new DynamoDBClient({});
+const docClient = DynamoDBDocumentClient.from(client);
 
 const tableName = process.env.TABLE_NAME || "";
-const dynamo = new DynamoDB.DocumentClient();
 
-const createResponse = (
-  body: string | DynamoDB.DocumentClient.ItemList,
-  statusCode = 200,
-) => {
+const createResponse = (body: string, statusCode = 200) => {
   return {
     statusCode,
     headers: {
@@ -22,14 +22,14 @@ const deleteTodoItem = async (data: { id: string }) => {
   const { id } = data;
 
   if (id && id !== "") {
-    await dynamo
-      .delete({
-        TableName: tableName,
-        Key: {
-          id,
-        },
-      })
-      .promise();
+    const command = new DeleteCommand({
+      TableName: tableName,
+      Key: {
+        id,
+      },
+    });
+
+    await docClient.send(command);
   }
 
   return id;

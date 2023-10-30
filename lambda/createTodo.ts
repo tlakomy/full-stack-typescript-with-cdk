@@ -1,14 +1,15 @@
-import { DynamoDB } from "aws-sdk";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { PutCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+
 import { v4 as uuid } from "uuid";
 import { APIGatewayEvent } from "aws-lambda";
 
-const tableName = process.env.TABLE_NAME || "";
-const dynamo = new DynamoDB.DocumentClient();
+const client = new DynamoDBClient({});
+const docClient = DynamoDBDocumentClient.from(client);
 
-const createResponse = (
-  body: string | DynamoDB.DocumentClient.ItemList,
-  statusCode = 200,
-) => {
+const tableName = process.env.TABLE_NAME || "";
+
+const createResponse = (body: string, statusCode = 200) => {
   return {
     statusCode,
     headers: {
@@ -22,15 +23,15 @@ const createResponse = (
 const addTodoItem = async (data: { todo: string; id: string }) => {
   const { id, todo } = data;
   if (todo && todo !== "") {
-    await dynamo
-      .put({
-        TableName: tableName,
-        Item: {
-          id: id || uuid(),
-          todo,
-        },
-      })
-      .promise();
+    const command = new PutCommand({
+      TableName: tableName,
+      Item: {
+        id: id || uuid(),
+        todo,
+      },
+    });
+
+    await docClient.send(command);
   }
 
   return todo;
@@ -48,7 +49,7 @@ export const handler = async function (event: APIGatewayEvent) {
 
     const todo = await addTodoItem(data);
     return todo
-      ? createResponse(`${todo} added to the database`)
+      ? createResponse(`${todo} added to the database!`)
       : createResponse("Todo is missing", 500);
   } catch (error) {
     console.log(error);
