@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import { v4 as uuid } from "uuid";
 
-import ErrorMessage from "./ErrorMessage";
-import TodoList, { TodoObject } from "./TodoList";
+import ErrorMessage from "../components/ErrorMessage";
+import TodoList, { TodoObject } from "../components/TodoList";
 
-const apiEndpoint = `${process.env.REACT_APP_TODO_ENDPOINT}todos`;
+const apiEndpoint = `${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/todos`;
 
 const Wrapper = styled.main`
   display: flex;
@@ -16,7 +16,7 @@ const Wrapper = styled.main`
   width: 50rem;
   max-width: 80vw;
   min-height: 60rem;
-  border-radius: 4px;
+  border-radius: 16px;
   border: solid 1px #d8dfe0;
   background: #fff;
 `;
@@ -26,8 +26,10 @@ const Header = styled.header`
   background: #002f34;
   color: #fff;
   text-align: center;
-  font-size: 3.6rem;
+  font-size: 2rem;
   padding: 2.4rem 0;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 `;
 
 const NewTodoSection = styled.section`
@@ -147,7 +149,7 @@ const App = () => {
             id="add-todo"
             type="text"
             ref={inputElement}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
           />
           <button onClick={addTodoClick}>Add todo</button>
         </TodoInputContainer>
