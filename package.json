@@ -2,7 +2,7 @@
   "name": "fullstack-typescript-with-cdk",
   "version": "0.1.0",
   "bin": {
-    "fullstack-typescript-with-cdk": "bin/fullstack-typescript-with-cdk.js"
+    "fullstack-typescript-with-cdk": "bin/todo-app.js"
   },
   "scripts": {
     "build": "tsc",
