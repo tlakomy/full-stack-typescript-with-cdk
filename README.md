@@ -1,14 +1,3 @@
-# Welcome to your CDK TypeScript project
+# Full Stack TypeScript with AWS Cloud Development Kit v2
 
-This is a blank project for CDK development with TypeScript.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+This repo contains the source code for my [Full Stack TypeScript with AWS Cloud Development Kit v2](https://egghead.io/courses/full-stack-typescript-with-aws-cloud-development-kit-v2-2daa5cf1) course available on [egghead.io](https://egghead.io?af=6p5abz).
