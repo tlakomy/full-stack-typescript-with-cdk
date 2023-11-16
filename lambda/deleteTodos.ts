@@ -40,7 +40,7 @@ export const handler = async function (event: APIGatewayEvent) {
     const { body: requestBody } = event;
 
     if (!requestBody) {
-      return createResponse("Missing request body", 500);
+      return createResponse("Missing request body", 403);
     }
 
     const data = JSON.parse(requestBody);

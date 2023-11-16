@@ -1,8 +1,9 @@
-import { Duration, Stack, StackProps } from "aws-cdk-lib";
+import { Stack, StackProps, Duration } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as lambdaNodejs from "aws-cdk-lib/aws-lambda-nodejs";
-import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as apiGateway from "aws-cdk-lib/aws-apigateway";
+import { TodoBackend } from "./todo-backend";
+import { Website } from "@symphoniacloud/cdk-website";
 
 export class TodoAppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -12,18 +13,24 @@ export class TodoAppStack extends Stack {
       this,
       "HelloWorldFunction",
       {
-        entry: "lambda/helloWorld.ts",
+        entry: "lambda/hello-world.ts",
         handler: "handler",
         memorySize: 256,
-        architecture: lambda.Architecture.ARM_64,
-        runtime: lambda.Runtime.NODEJS_18_X,
         timeout: Duration.seconds(10),
-        environment: { isProduction: "absolutely not" },
       },
     );
 
     const endpoint = new apiGateway.LambdaRestApi(this, "Endpoint", {
       handler: helloWorldFunction,
+    });
+
+    const todoBackend = new TodoBackend(this, "TodoBackend", {});
+
+    const website = new Website(this, "website", {
+      content: {
+        path: "frontend/build",
+        performCacheInvalidation: true,
+      },
     });
   }
 }
